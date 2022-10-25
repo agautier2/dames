@@ -78,9 +78,9 @@ char pion_init(int ligne, int colonne){
 //DEBUT PARTIE
 void jouer_dames(char tab[][COLONNE_DAMIER], char couleur){
 
-    char partie[20]= "start";
+    char partie= 'S';
     printf("Les BLANC commencent \n");
-    while(partie != "terminer")
+    while(partie != 'T')
     {
     Choix_du_Pion(tab,couleur);
     if (couleur == 'B'){
@@ -96,14 +96,17 @@ void jouer_dames(char tab[][COLONNE_DAMIER], char couleur){
 
 }
 
-Void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
+void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
 
+    
+    int validation;
     if (couleur == 'W'){
 
         for (int ligne = 0; ligne < LIGNE_DAMIER ; ligne++){
             for(int colonne = 0 ; colonne < COLONNE_DAMIER; colonne++){
-                if tab[colonne][ligne]= couleur{
-                    validation == Validation_pion_selectionner(tab, couleur,ligne,colonne);
+            
+                if (tab[colonne][ligne]== couleur){
+                    validation = Validation_pion_selectionner(tab, couleur,ligne,colonne);
                     if (validation == 1){
                         
                     }
@@ -157,7 +160,7 @@ void Choix_du_Pion(char tab[][COLONNE_DAMIER],char couleur){
         else if(validation_pion==3){
             printf("aucun pion %c au coordonnées indiquer \nVeuillez ré",couleur);   
         }
-        else if (validation_pion=4){
+        else if (validation_pion==4){
            printf("Coordonnées hors damier\n");   
         }
     }while (validation_pion != 1);
@@ -216,6 +219,8 @@ int Validation_pion_selectionner(char tab[][COLONNE_DAMIER], char couleur,int li
     else{
         return 4;
     }  
+
+    return 0;
 }
 
 
@@ -272,7 +277,7 @@ int Validation_pion_deplacement(char tab[][COLONNE_DAMIER], char couleur,int lig
         }
         
         if(couleur == 'B'){
-            if (tab[colonne_pion_deplacement][ligne_pion_deplacement] = ' ' && 
+            if (tab[colonne_pion_deplacement][ligne_pion_deplacement] == ' ' && 
             ((colonne_pion_deplacement == colonne_pion_selectionner +1  && ligne_pion_deplacement == ligne_pion_selectionner +1) ||
             (colonne_pion_deplacement == colonne_pion_selectionner -1  && ligne_pion_deplacement == ligne_pion_selectionner +1))) {
                 return 1; // deplacement possible
@@ -284,7 +289,7 @@ int Validation_pion_deplacement(char tab[][COLONNE_DAMIER], char couleur,int lig
         }
         else if (couleur =='W')
         {
-            if (tab[colonne_pion_deplacement][ligne_pion_deplacement] = ' ' && 
+            if (tab[colonne_pion_deplacement][ligne_pion_deplacement] == ' ' && 
             ((colonne_pion_deplacement == colonne_pion_selectionner -1  && ligne_pion_deplacement == ligne_pion_selectionner -1) ||
             (colonne_pion_deplacement == colonne_pion_selectionner +1  && ligne_pion_deplacement == ligne_pion_selectionner -1))) {
                 return 1; // deplacement possible
@@ -300,6 +305,7 @@ int Validation_pion_deplacement(char tab[][COLONNE_DAMIER], char couleur,int lig
     else{
         return 3; // deplacement hors damier
     }
+return 0;
 }
 
 void Affichage_deplacement(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_deplacement,int colonne_pion_deplacement, int ligne_pion_selectionner, int colonne_pion_selectionner)

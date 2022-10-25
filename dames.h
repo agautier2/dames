@@ -14,5 +14,5 @@ int Validation_pion_selectionner(char tab[][COLONNE_DAMIER], char couleur,int li
 void Deplacement_du_Pion(char tab[][COLONNE_DAMIER],char couleur,int colonne_pion_selectionner, int ligne_pion_selectionner);
 int Validation_pion_deplacement(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_deplacement,int colonne_pion_deplacement, int ligne_pion_selectionner, int colonne_pion_selectionner);
 void Affichage_deplacement(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_deplacement,int colonne_pion_deplacement, int ligne_pion_selectionner, int colonne_pion_selectionner);
-
+void action_automatique(char tab[][COLONNE_DAMIER], char couleur);
 #endif
