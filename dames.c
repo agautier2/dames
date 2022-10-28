@@ -100,6 +100,7 @@ void jouer_dames(char tab[][COLONNE_DAMIER], char couleur){
                 }
             }
             action_automatique(tab,couleur);
+
             changement_dans_damier(tab,tab2);
 
             if (changement_dans_damier(tab,tab2)==1){
@@ -127,8 +128,6 @@ void jouer_dames(char tab[][COLONNE_DAMIER], char couleur){
     
     }
 
-
-
 void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
 
     int tab_ligne_pion_qui_peut_manger[100];
@@ -140,12 +139,13 @@ void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
     int manger=0;
     int nb_manger =0;
     char couleur_opp;
+
    
 
     for (int ligne = 0; ligne < LIGNE_DAMIER ; ligne++){
         for(int colonne = 0 ; colonne < COLONNE_DAMIER; colonne++){
             
-            if (tab[colonne][ligne]== couleur){
+            if (tab[colonne][ligne] == couleur){
                 validation = Validation_pion_selectionner(tab, couleur,ligne,colonne);
 
                 if (validation == 1){
@@ -153,10 +153,10 @@ void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
                     manger = validation_manger_pion(tab,couleur,ligne,colonne);
 
                      if(manger > 0){
-
+                        nb_manger += 1;
                         tab_ligne_pion_qui_peut_manger[nb_manger] = ligne;
                         tab_colonne_pion_qui_peut_manger[nb_manger] = colonne;
-                        nb_manger += 1;
+                        
                      }
                       
                 }
@@ -168,17 +168,21 @@ void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
 
     if(nb_manger > 0 && couleur =='B'){
         couleur_opp ='W';
-        int numero_manger;
-        
+    
         if (nb_manger>1){
-
-            printf("Choisissez quel pion doit manger");
-            for(int i = 0; i<nb_manger;i++){
+            int nombre_manger = nb_manger;
+            for(int i = 1; i<nb_manger+1;i++){
             printf("Piont %d, (%d,%d)\n",i,tab_colonne_pion_qui_peut_manger[i],tab_ligne_pion_qui_peut_manger[i]) ;
             }
+
+            do{
+                printf("Choisissez quel pion doit manger : ");
+                scanf("%d",&nb_manger);
+
+            }while ( nb_manger < 1 && nb_manger > nombre_manger+1 );
             
-            scanf("%d",&numero_manger);
-            deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[numero_manger],tab_colonne_pion_qui_peut_manger[numero_manger]);
+            
+            deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[nb_manger],tab_colonne_pion_qui_peut_manger[nb_manger]);
 
         }
         else if(nb_manger == 1){
@@ -189,22 +193,27 @@ void action_automatique(char tab[][COLONNE_DAMIER], char couleur){
     }   
     else if(nb_manger>0  && couleur =='W'){
         couleur_opp ='B';
-        int numero_manger;
         
         if (nb_manger>1){
+        int nombre_manger = nb_manger;
 
-            printf("Choisissez quel pion doit manger");
-            for(int i = 0; i<nb_manger;i++){
+            
+            for(int i = 1; i<nb_manger+1;i++){
             printf("Piont %d, (%d,%d)\n",i,tab_colonne_pion_qui_peut_manger[i],tab_ligne_pion_qui_peut_manger[i]) ;
             }
-            
-            scanf("%d",&numero_manger);
-            deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[numero_manger],tab_colonne_pion_qui_peut_manger[numero_manger]);
+
+            do{
+                printf("Choisissez quel pion doit manger : ");
+                scanf("%d",&nb_manger);
+
+            }while ( nb_manger <1 && nb_manger > nombre_manger+1 );
+;
+            deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[nb_manger],tab_colonne_pion_qui_peut_manger[nb_manger]);
 
         }
         else if(nb_manger == 1){
-             printf("il y a un seul Pion  %d, (%d,%d)\n",nb_manger,tab_colonne_pion_qui_peut_manger[nb_manger],tab_ligne_pion_qui_peut_manger[nb_manger]) ;
-            // deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[nb_manger],tab_colonne_pion_qui_peut_manger[nb_manger]);  
+             printf("il y a un seul Pion  %d, (%d,%d)\n",nb_manger-1,tab_colonne_pion_qui_peut_manger[nb_manger],tab_ligne_pion_qui_peut_manger[nb_manger]) ;
+             deplacement_manger(tab,couleur,couleur_opp,tab_ligne_pion_qui_peut_manger[nb_manger],tab_colonne_pion_qui_peut_manger[nb_manger]);  
              
         }
 
@@ -449,47 +458,105 @@ else{
 
 }
 
-
 int deplacement_manger(char tab[][COLONNE_DAMIER],char couleur, char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner){
     
-   // printf("pion en (%d %d)",colonne_pion_selectionner+2,ligne_pion_selectionner+2);
+    char init_pion = 'N';
+    // int mbd;
+    // int mbg;
+    // int mhd;
+    // int mhg;
+    // int pion_a_manger;
+    // int choix;
+
+
+    // printf("Pion peut manger en : ");
 
     // if (manger_bas_droite(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
-    //     tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
-    //     tab[colonne_pion_selectionner+1][ligne_pion_selectionner+1]=' ';
-    //     tab[colonne_pion_selectionner+2][ligne_pion_selectionner+2]= couleur;
+    //     mbd = 1;
+    //     choix = mbd;
+    //     printf("Choix %d : (%d,%d)",choix, colonne_pion_selectionner+1,ligne_pion_selectionner+1);
 
-
-
+        
     // }
-    // else if (manger_bas_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
-    //     tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
-    //     tab[colonne_pion_selectionner-1][ligne_pion_selectionner+1]=' ';
-    //     tab[colonne_pion_selectionner-2][ligne_pion_selectionner+2]= couleur;
 
+    // if (manger_bas_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+    //     mbg = 1;
+    //     choix = mbd+mbg;
+    //     printf("Choix %d : (%d,%d)",choix, colonne_pion_selectionner-1,ligne_pion_selectionner+1);
+        
     // }
-    //  else if (manger_haut_droite(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
-    //     tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
-    //     tab[colonne_pion_selectionner+1][ligne_pion_selectionner-1]=' ';
-    //     tab[colonne_pion_selectionner+2][ligne_pion_selectionner-2]= couleur;
 
+    // if (manger_haut_droite(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+    //     mhd = 1;
+    //     choix = mbd+mbg+mhd;
+    //     printf("Choix %d : (%d,%d)",choix, colonne_pion_selectionner+1,ligne_pion_selectionner-1);
+        
     // }
-    //  else if (manger_haut_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
-    //     printf("pion en (%d %d)",colonne_pion_selectionner+2,ligne_pion_selectionner+2);
-    //     tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
-    //     tab[colonne_pion_selectionner-1][ligne_pion_selectionner-1]=' ';
-    //     tab[colonne_pion_selectionner-2][ligne_pion_selectionner-2]= couleur;
 
+    // if (manger_haut_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+    //     mhg = 1 ;
+    //     choix = mbd+mbg+mhd+mhg; 
+    //     printf("Choix %d : (%d,%d)",choix, colonne_pion_selectionner-1,ligne_pion_selectionner-1);
     // }
-    
+
+    // if(mbd+mbg+mhd+mhg>1){
+    //     do
+    //     {
+    //         printf("Choisir le pion a manger : ");
+    //         scanf("%d",&pion_a_manger);
+    //     } while (pion_a_manger>=1 && pion_a_manger<mbd+mbg+mhd+mhg);
+
+
+        
+
+
+
+    //else if(mbd+mbg+mhd+mhg==1){
+
+        if (manger_bas_droite(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+        tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
+        tab[colonne_pion_selectionner+1][ligne_pion_selectionner+1]=' ';
+        tab[colonne_pion_selectionner+2][ligne_pion_selectionner+2]= couleur;
+        printf("pion %c en (%d,%d) a mangé le pion %c en (%d,%d) et c'est déplacé en(%d,%d)\n",couleur,colonne_pion_selectionner,ligne_pion_selectionner,couleur_oposant,colonne_pion_selectionner+1,ligne_pion_selectionner+1,colonne_pion_selectionner+2,ligne_pion_selectionner+2);
+
+
+
+        }
+        else if (manger_bas_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+            tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
+            tab[colonne_pion_selectionner-1][ligne_pion_selectionner+1]=' ';
+            tab[colonne_pion_selectionner-2][ligne_pion_selectionner+2]= couleur;
+            printf("pion %c en (%d,%d) a mangé le pion %c en (%d,%d) et c'est déplacer en(%d,%d)\n",couleur,colonne_pion_selectionner,ligne_pion_selectionner,couleur_oposant,colonne_pion_selectionner-1,ligne_pion_selectionner+1,colonne_pion_selectionner-2,ligne_pion_selectionner+2);
+
+
+        }
+        else if (manger_haut_droite(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+            tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
+            tab[colonne_pion_selectionner+1][ligne_pion_selectionner-1]=' ';
+            tab[colonne_pion_selectionner+2][ligne_pion_selectionner-2]= couleur;
+            printf("pion %c en (%d,%d) a mangé le pion %c en (%d,%d) et c'est déplacé en(%d,%d)\n",couleur,colonne_pion_selectionner,ligne_pion_selectionner,couleur_oposant,colonne_pion_selectionner+1,ligne_pion_selectionner-1,colonne_pion_selectionner+2,ligne_pion_selectionner-2);
+
+        }
+        else if (manger_haut_gauche(tab,couleur_oposant,ligne_pion_selectionner,colonne_pion_selectionner) == 1){
+            tab[colonne_pion_selectionner][ligne_pion_selectionner]=' ';
+            tab[colonne_pion_selectionner-1][ligne_pion_selectionner-1]=' ';
+            tab[colonne_pion_selectionner-2][ligne_pion_selectionner-2]= couleur;
+            printf("pion %c en (%d,%d) a mangé le pion %c en (%d,%d) et c'est déplacé en(%d,%d)\n",couleur,colonne_pion_selectionner,ligne_pion_selectionner,couleur_oposant,colonne_pion_selectionner-1,ligne_pion_selectionner-1,colonne_pion_selectionner-2,ligne_pion_selectionner-2);
+
+     //  }
+
+    }
+     print_damier(tab,init_pion);
 
 }
 
 
 
+
+
 int manger_bas_droite(char tab[][COLONNE_DAMIER],char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner){
 
-    if((colonne_pion_selectionner < 8) && (ligne_pion_selectionner < 8) && (tab[colonne_pion_selectionner+1][ligne_pion_selectionner+1] ==couleur_oposant) && (tab[colonne_pion_selectionner+2][ligne_pion_selectionner+2]=' ')){
+    if((colonne_pion_selectionner < 8) && (ligne_pion_selectionner < 8) && (tab[colonne_pion_selectionner+1][ligne_pion_selectionner+1] == couleur_oposant ) && (tab[colonne_pion_selectionner+2][ligne_pion_selectionner+2]=' ')){
         return 1;
 
     }
