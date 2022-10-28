@@ -15,4 +15,11 @@ void Deplacement_du_Pion(char tab[][COLONNE_DAMIER],char couleur,int colonne_pio
 int Validation_pion_deplacement(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_deplacement,int colonne_pion_deplacement, int ligne_pion_selectionner, int colonne_pion_selectionner);
 void Affichage_deplacement(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_deplacement,int colonne_pion_deplacement, int ligne_pion_selectionner, int colonne_pion_selectionner);
 void action_automatique(char tab[][COLONNE_DAMIER], char couleur);
+int validation_manger_pion(char tab[][COLONNE_DAMIER], char couleur,int ligne_pion_selectionner,int colonne_pion_selectionner);
+int manger_haut_gauche(char tab[][COLONNE_DAMIER] ,char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner);
+int manger_haut_droite(char tab[][COLONNE_DAMIER],char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner);
+int manger_bas_gauche(char tab[][COLONNE_DAMIER],char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner);
+int manger_bas_droite(char tab[][COLONNE_DAMIER],char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner);
+int deplacement_manger(char tab[][COLONNE_DAMIER],char couleur, char couleur_oposant, int ligne_pion_selectionner, int colonne_pion_selectionner);
+int changement_dans_damier(char tab[][COLONNE_DAMIER],char tab2[][COLONNE_DAMIER]);
 #endif

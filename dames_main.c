@@ -13,7 +13,7 @@ int main(){
     printf("Voulez vous commencer une nouvelle partie ? (Y/N) : ");
     scanf("%c", &partie);
     if(partie == 'Y' || partie =='y'){
-        char init_damier ='N';
+
         jouer_dames(tableau,couleur);   
     }   
     
